@@ -1,5 +1,6 @@
 import { Profile } from "src/profile/profile.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Tweet } from "src/tweet/tweet.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -21,7 +22,7 @@ export class User {
     email: string;
     @Column({
         type: 'varchar',
-        length: 100,
+        length: 100, 
         nullable: false
     })
     password: string;
@@ -30,6 +31,9 @@ export class User {
         cascade: ["insert"],
     })
     profile?: Profile;
+
+    @OneToMany(() => Tweet, (tweets) => tweets.user)
+    tweets: Tweet
     
     @CreateDateColumn()
     createdAt: Date;
